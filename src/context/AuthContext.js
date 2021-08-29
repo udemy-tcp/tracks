@@ -9,9 +9,15 @@ const authReducer = (state, action) => {
       return { ...state, errorMessage: action.payload }
     case 'signin':
       return { errorMessage: '', token: action.payload }
+    case 'clear_error_message':
+      return { ...state, errorMessage: '' }
     default:
       return state
   }
+}
+
+const clearErrorMessage = (dispatch) => () => {
+  dispatch({ type: 'clear_error_message' })
 }
 
 const signup =
@@ -44,7 +50,7 @@ const signin =
     // Handle success by updating state
     // Handle failure by showing error message (somehow)
     try {
-      const response = trackerApi('/signin', { email, password })
+      const response = await trackerApi.post('/signin', { email, password })
       await AsyncStorage.setItem('token', response.data.token)
       dispatch({ type: 'signin', payload: response.data.token })
       navigate('TrackList')
@@ -65,6 +71,6 @@ const signout = (dispatch) => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signup, signout },
+  { signin, signup, signout, clearErrorMessage },
   { token: null, errorMessage: '' }
 )
