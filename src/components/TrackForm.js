@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
-import { Input, Button } from 'react-native-elements'
-import Spacer from './Spacer'
-import { Context as LocationContext } from '../context/LocationContext'
+import React, { useContext } from 'react';
+import { Input, Button } from 'react-native-elements';
+import Spacer from './Spacer';
+import { Context as LocationContext } from '../context/LocationContext';
 
 const TrackForm = () => {
   const {
@@ -9,9 +9,9 @@ const TrackForm = () => {
     startRecording,
     stopRecording,
     changeName
-  } = useContext(LocationContext)
+  } = useContext(LocationContext);
 
-  console.log(locations.length)
+  console.log(locations.length);
 
   return (
     <>
@@ -22,8 +22,12 @@ const TrackForm = () => {
       ) : (
         <Button title="Start Recording" onPress={startRecording} />
       )}
+      <Spacer />
+      {!recording && locations.length ? (
+        <Button title="Save Recording" />
+      ) : null}
     </>
-  )
-}
+  );
+};
 
-export default TrackForm
+export default TrackForm;
