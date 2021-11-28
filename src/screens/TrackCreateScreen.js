@@ -7,6 +7,7 @@ import Map from '../components/Map';
 import { Context as LocationContext } from '../context/LocationContext';
 import useLocation from '../hooks/useLocation';
 import TrackForm from '../components/TrackForm';
+import { Entypo } from '@expo/vector-icons';
 
 const TrackCreateScreen = ({ isFocused }) => {
   const {
@@ -23,7 +24,7 @@ const TrackCreateScreen = ({ isFocused }) => {
   const [err] = useLocation(isFocused || recording, callback);
 
   return (
-    <SafeAreaView forceInset={{ top: 'always' }}>
+    <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <Text h2>Create a Track</Text>
       <Map />
       {err ? <Text>Please enable location services</Text> : null}
@@ -32,6 +33,15 @@ const TrackCreateScreen = ({ isFocused }) => {
   );
 };
 
-const styles = StyleSheet.create({});
+TrackCreateScreen.navigationOptions = {
+  title: 'Add Track',
+  tabBarIcon: <Entypo name="circle-with-plus" size={24} color="black" />
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 16
+  }
+});
 
 export default withNavigationFocus(TrackCreateScreen);
