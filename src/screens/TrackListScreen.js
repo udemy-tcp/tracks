@@ -7,6 +7,19 @@ import { ListItem } from 'react-native-elements';
 const TrackListScreen = ({ navigation }) => {
   const { state, fetchTracks } = useContext(TrackContext);
 
+  const TrackItem = ({ item, onItemPress }) => {
+    return (
+      <TouchableOpacity onPress={onItemPress}>
+        <ListItem>
+          <ListItem.Content>
+            <ListItem.Title>{item.name}</ListItem.Title>
+          </ListItem.Content>
+          <ListItem.Chevron />
+        </ListItem>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <>
       <NavigationEvents onWillFocus={fetchTracks} />
@@ -16,14 +29,12 @@ const TrackListScreen = ({ navigation }) => {
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity>
-              <ListItem>
-                <ListItem.Content>
-                  <ListItem.Title>{item.name}</ListItem.Title>
-                </ListItem.Content>
-                <ListItem.Chevron />
-              </ListItem>
-            </TouchableOpacity>
+            <TrackItem
+              item={item}
+              onItemPress={() => {
+                navigation.navigate('TrackDetail', { _id: item._id });
+              }}
+            />
           );
         }}
       />
